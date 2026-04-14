@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "version": "0.5.0",
+  "description": "__MSG_appDescription__",
+  "permissions": ["storage", "downloads", "activeTab", "scripting"],
+  "host_permissions": ["https://claude.ai/*"],
+  "optional_host_permissions": ["*://*/*"],
+  "background": { "service_worker": "src/background/service-worker.js" },
+  "content_scripts": [{
+    "matches": ["https://claude.ai/*"],
+    "js": [
+      "src/utils/constants.js",
+      "src/utils/storage.js",
+      "src/utils/dom.js",
+      "src/utils/claude-api.js",
+      "src/content/api-interceptor.js",
+      "src/content/injector.js",
+      "src/content/modules/layout.js",
+      "src/content/modules/exporter.js",
+      "src/content/modules/compressor.js",
+      "src/content/modules/session-tracker.js",
+      "src/content/modules/health-monitor.js",
+      "src/content/modules/navigator.js",
+      "src/content/modules/shortcuts.js",
+      "src/content/main.js"
+    ],
+    "css": ["src/styles/inject.css"],
+    "run_at": "document_idle"
+  }],
+  "web_accessible_resources": [{
+    "resources": ["src/content/page-script.js"],
+    "matches": ["<all_urls>"]
+  }],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": { "16": "icons/icon-16.png", "32": "icons/icon-32.png", "48": "icons/icon-48.png", "128": "icons/icon-128.png" }
+  },
+  "options_page": "src/options/options.html",
+  "icons": { "16": "icons/icon-16.png", "48": "icons/icon-48.png", "128": "icons/icon-128.png" },
+  "default_locale": "en"
+}
